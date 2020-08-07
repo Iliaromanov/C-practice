@@ -2,6 +2,10 @@
 #include <cs50.h>
 #include <string.h>
 
+int countLetters(string text);
+int countWords(string text);
+int countSentences(string text);
+
 int main(void)
 {
     string text = get_string("Text: ");
@@ -24,13 +28,33 @@ int countLetters(string text)
 
 int countWords(string text)
 {
-    return 0;
+    int count = 0;
+    
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (text[i] == ' ')
+        {
+            count++;
+        }
+    }
+    
+    return count + 1;
 }
 
 int countSentences(string text)
 {
-    return 0;
-}
+    int count = 0;
+    
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (text[i] == '.' || text[i] == '!' || text[i] == '?')
+        {
+            count++;
+        }
+    }
+    
+    return count;
+}    
     
 int calculateGrade(void)
 {
