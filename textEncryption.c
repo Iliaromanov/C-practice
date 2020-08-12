@@ -43,3 +43,39 @@ int main(int argc, string argv[])
     encryptText(key, plaintext);
     return 0;
 }
+
+void encryptText(string key, string text)
+{
+    string alphabet = "abcdefghijklmnopqrstuvwxyz";
+    char ciphertext[strlen(text)];
+    
+    for (int i = 0; i < strlen(text); i++)
+    {
+        if (text[i] >= 'A' && text[i] <= 'Z')
+        {
+            for (int j = 0; j <= 26; j++)
+            {
+                if (tolower(text[i]) == alphabet[j])
+                {
+                    ciphertext[i] = toupper(key[j]);
+                }
+            }
+        }
+        else if (text[i] >= 'a' && text[i] <= 'z')
+        {
+            for (int j = 0; j <= 26; j++)
+            {
+                if (text[i] == alphabet[j])
+                {
+                    ciphertext[i] = tolower(key[j]);
+                }
+            }
+        }
+        else
+        {
+            ciphertext[i] = text[i];
+        }
+    }
+    ciphertext[strlen(text)] = '\0';
+    printf("%s\n", ciphertext);
+}
