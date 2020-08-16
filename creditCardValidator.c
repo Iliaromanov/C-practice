@@ -9,7 +9,7 @@ int main(void)
 {
     long card = get_long("Number: ");
     
-    if (checkValid(card) == 1)
+    if (checkValid(card) == 0)
     {
         printf("%s", cardType(card));
     }
@@ -84,10 +84,10 @@ int checkValid(long num)
     int total = totalA + totalB;
     if (total % 10 == 0)
     {
-        return 1;
+        return 0;
     }
     else
     {
-        return 0;
+        return 1;
     }
 }
