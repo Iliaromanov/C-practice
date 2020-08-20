@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -15,6 +16,7 @@ typedef struct
 {
     int winner;
     int loser;
+    int strength;
 }
 pair;
 
@@ -99,29 +101,80 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(name, candidates[i]) == 0)
+        {
+            ranks[rank] = i;
+            return true;
+        }
+    }
+
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
-    return;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            preferences[ranks[i]][ranks[j]]++;
+        }
+    }
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
-    return;
+    for (int i = 0; i < candidate_count; i++)
+    {
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            if (preferences[i][j] > preferences[j][i])
+            {
+                pairs[pair_count].winner = i;
+                pairs[pair_count].loser = j;
+                pairs[pair_count].strength = preferences[i][j];
+                pair_count ++;
+            }
+            else if (preferences[j][i] > preferences[i][j])
+            {
+                pairs[pair_count].winner = j;
+                pairs[pair_count].loser = i;
+                pairs[pair_count].strength = preferences[j][i];
+                pair_count ++;
+            }
+        }
+    }
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
-    return;
+    // bubble sort
+    for (int i = 0; i < pair_count; i++)
+    {
+        int swap = 1; //swap counter used to break out of the loop when its sorted
+        
+        for (int j = 0; j < pair_count - i; j++)
+        {
+            int a = pairs[j].strength;
+            int b = pairs[j + 1].strength;
+            
+            if (a > b)
+            {
+                pairs[j] = pairs[j + 1];
+                pairs[j + 1] = pairs[j];
+                swap = 0;
+            }
+        }
+        if (swap == 1)
+        {
+            break;
+        }
+    }
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
