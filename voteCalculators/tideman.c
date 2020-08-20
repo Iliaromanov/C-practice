@@ -156,17 +156,19 @@ void sort_pairs(void)
     // bubble sort
     for (int i = 0; i < pair_count; i++)
     {
-        int swap = 1; //swap counter used to break out of the loop when its sorted
-        
-        for (int j = 0; j < pair_count - i; j++)
+        int swap = 1; //swap counter used to break out of the loop when array is sorted
+        for (int j = 0; j < pair_count - 1 - i; j++)
         {
-            int a = pairs[j].strength;
-            int b = pairs[j + 1].strength;
+            pair pairA = pairs[j];
+            pair pairB = pairs[j + 1];
+            
+            int a = pairA.strength;
+            int b = pairB.strength;
             
             if (a > b)
             {
-                pairs[j] = pairs[j + 1];
-                pairs[j + 1] = pairs[j];
+                pairs[j] = pairB;
+                pairs[j + 1] = pairA;
                 swap = 0;
             }
         }
