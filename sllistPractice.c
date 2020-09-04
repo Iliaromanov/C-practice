@@ -12,16 +12,27 @@ node;
 // function prototypes
 node *createList(int headVal);
 node *startInsert(node *sllist, int val);
+void append(node *sllist, int val);
 void printList(node *sllist);
 
 int main(void)
 {
-    // create a singly-linked list and store it at an address called listA
-    node *listA = createList(2);
+    // create a singly-linked list with the first node having the value of 3 and store it at an address called listA
+    node *listA = createList(3);
     // print the values in the sllist
     printList(listA);
-    // insert a node with the value of 1 at the start of the sllist
+    // insert nodes at the start of the sllist
+    listA = startInsert(listA, 2);
     listA = startInsert(listA, 1);
+    // print the values in the sllist
+    printList(listA);
+    // append nodes with to listA
+    append(listA, 4);
+    append(listA, 5);
+    for (int i = 6; i <= 10; i++)
+    {
+        append(listA, i);
+    }
     // print the values in the sllist
     printList(listA);
 }
@@ -61,7 +72,21 @@ node *startInsert(node *sllist, int val)
 // a function to add a node to the end of a singly-linked list
 void append(node *sllist, int val)
 {
-    
+    // go through the sllist until arriving at the last node and store that node in *end
+    node *end;
+    while (sllist->next != NULL)
+    {
+        sllist = sllist->next;
+        end = sllist;
+    }
+    // allocate space in memory for a node object
+    node *tmp = malloc(sizeof(node));
+    if (tmp != NULL)
+    {
+        tmp->val = val;
+        // set the last nodes next value as tmp
+        end->next = tmp;
+    }
 }
 
 // a function to print the values in a singly-linked list
